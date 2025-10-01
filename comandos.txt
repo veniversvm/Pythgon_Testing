@@ -1,0 +1,5 @@
+# Descubrir test
+py -m unittest discover -s tests d
+
+# Destalle de los test (el orden de las flags es importante)
+py -m unittest discover -v -s tests
