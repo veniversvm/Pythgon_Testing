@@ -1,5 +1,6 @@
 import unittest, os
-from src.bank_account import BankAccount
+from src.bank_account import BankAccount, WithDrawTimeRestrictionError
+from unittest.mock import patch
 
 # class BankAccountTests(unittest.TestCase):
 #     def test_deposit(self):
@@ -106,3 +107,18 @@ class BankAccountTests2(unittest.TestCase):
             filename=log_file,
             line_number=1,
             expected_msg=f"Error of withdraw attemp: Intendent ammount:{withdraw} || Current balance: {balance}.") == True
+
+    # Clase 12
+    # Retiro en horario permitido, NO lanza error
+    @patch("src.bank_account.datetime")
+    def test_withdraw_during_bussines_hours(self, mock_datetime):
+        mock_datetime.now.return_value.hour = 10
+        self.account.withdraw(500)
+
+    # Retiro en no horario permitido, lanza error
+    @patch("src.bank_account.datetime")
+    def test_withdraw_during_no_bussines_hours(self, mock_datetime):
+        mock_datetime.now.return_value.hour = 1
+        with self.assertRaises(WithDrawTimeRestrictionError):
+            self.account.withdraw(500)
+    # Clase 12

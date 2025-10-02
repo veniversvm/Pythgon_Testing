@@ -1,3 +1,7 @@
+from datetime import datetime
+
+class WithDrawTimeRestrictionError(Exception):
+    pass
 class BankAccount:
     def __init__(self, balance=0, log_file=None):
         self.balance = balance
@@ -20,6 +24,13 @@ class BankAccount:
         return self.balance
 
     def withdraw(self, amount):
+        now = datetime.now()
+        print("Hour: ",now.hour)
+        # classe 12
+        if now.hour < 8 or now.hour > 17:
+            raise WithDrawTimeRestrictionError("Illegal Withdraw attemp")
+        # classe 12
+
         print("### withdraw ",amount, self.balance, amount > self.balance)
         if amount > self.balance:
             msg = f"Error of withdraw attemp: Intendent ammount:{amount} || Current balance: {self.balance}."
