@@ -31,4 +31,4 @@ jobs:
 
     - name: Test with unittest
       run: |
-        python -m unittest dicover clase17_20/
+        python -m unittest dicover clase17_20/tests
